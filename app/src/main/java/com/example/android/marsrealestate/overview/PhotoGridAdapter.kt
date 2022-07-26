@@ -28,17 +28,23 @@ import com.example.android.marsrealestate.databinding.GridViewItemBinding
 import com.example.android.marsrealestate.network.MarsProperty
 
 
-class PhotoGridAdapter() : ListAdapter<MarsProperty, PhotoGridAdapter.ViewHolder>(DiffCallback()) {
+class PhotoGridAdapter(private val onClickListener: onClickListener) :
+    ListAdapter<MarsProperty, PhotoGridAdapter.ViewHolder>(DiffCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ViewHolder.from(parent))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
+        holder.itemView.setOnClickListener {
+           onClickListener.onClick(item)
+        }
         holder.bind(item)
     }
 
-    class ViewHolder(private val binding: GridViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: GridViewItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(marsProperty: MarsProperty) {
             binding.property = marsProperty
             binding.executePendingBindings()
@@ -62,5 +68,9 @@ class DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
     override fun areContentsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
         return oldItem == newItem
     }
+}
+
+class onClickListener(val clickListener: (marsProperty: MarsProperty) -> Unit) {
+    fun onClick(marsProperty: MarsProperty) = clickListener(marsProperty)
 
 }

@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
  */
 class OverviewViewModel : ViewModel() {
 
-
     enum class MarsApiStatus { LOADING, ERROR, DONE }
 
     // The internal MutableLiveData String that stores the status of the most recent request
@@ -42,6 +41,17 @@ class OverviewViewModel : ViewModel() {
 
     private val _properties = MutableLiveData<List<MarsProperty>>()
     val properties: LiveData<List<MarsProperty>> = _properties
+
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
+    val navigateToSelectedProperty: LiveData<MarsProperty> = _navigateToSelectedProperty
+
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
+    }
 
 
     /**
@@ -67,6 +77,7 @@ class OverviewViewModel : ViewModel() {
 
             } catch (e: Exception) {
                 _status.value = MarsApiStatus.ERROR
+                _properties.value = ArrayList()
             }
         }
     }

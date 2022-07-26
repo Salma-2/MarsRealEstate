@@ -28,13 +28,26 @@ import com.example.android.marsrealestate.databinding.FragmentDetailBinding
  * This [Fragment] will show the detailed information about a selected piece of Mars real estate.
  */
 class DetailFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    lateinit var viewModel: DetailViewModel
+    private lateinit var viewModelFactory: DetailViewModelFactory
 
-        @Suppress("UNUSED_VARIABLE")
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+
         val application = requireNotNull(activity).application
         val binding = FragmentDetailBinding.inflate(inflater)
+
+        val marsProperty = DetailFragmentArgs.fromBundle(requireArguments()).selectedProperty
+
+        viewModelFactory = DetailViewModelFactory(marsProperty, application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
+
+
         binding.lifecycleOwner = this
+        binding.detailFragmentViewModel = viewModel
         return binding.root
     }
 }
