@@ -21,3 +21,4 @@ It leverages the following components from the Jetpack library:
 <img src="https://user-images.githubusercontent.com/48512714/181086562-21041495-b9bc-4634-a918-19876c5da511.png" width="200">
 <img src="https://user-images.githubusercontent.com/48512714/181086814-b2255470-6658-4b76-9570-15aab9c82001.png" width="200">
 </p>
+*This app is part of Advanced Android Kotlin Development Nanodegree Program on Udacity*
